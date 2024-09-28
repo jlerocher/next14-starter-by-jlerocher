@@ -1,6 +1,6 @@
 "use client";
 
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { MoonIcon, SunIcon, DesktopIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -24,13 +24,16 @@ export function ModeToggle() {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setTheme("light")}>
+                <DropdownMenuItem onClick={() => setTheme("light")} className="flex items-center gap-3 hover:text-accent-foreground">
+                    <SunIcon className="size-5"/>
                     Light
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                <DropdownMenuItem onClick={() => setTheme("dark")} className="flex items-center gap-3 hover:text-accent-foreground">
+                    <MoonIcon className="size-5"/>
                     Dark
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
+                <DropdownMenuItem onClick={() => setTheme("system")} className="flex items-center gap-3 hover:text-accent-foreground">
+                    <DesktopIcon className="size-5"/>
                     System
                 </DropdownMenuItem>
             </DropdownMenuContent>
