@@ -37,8 +37,9 @@ export default function RootLayout({
                     disableTransitionOnChange
                 >
                     <Header />
-
-                    {children}
+                    <main className="flex-1 overflow-hidden min-h-screen">
+                        {children}
+                    </main>
                 </ThemeProvider>
             </body>
         </html>
