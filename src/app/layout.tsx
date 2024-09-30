@@ -1,5 +1,6 @@
 import Header from "@/components/navigation/Header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -26,7 +27,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="fr">
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
@@ -40,6 +41,7 @@ export default function RootLayout({
                     <main className="flex-1 overflow-hidden min-h-screen">
                         {children}
                     </main>
+                    <Toaster />
                 </ThemeProvider>
             </body>
         </html>
