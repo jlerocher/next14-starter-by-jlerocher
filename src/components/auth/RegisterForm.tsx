@@ -2,7 +2,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { registerFormSchema } from "@/lib/formValidation";
+import { registerFormSchema } from "@/lib/clientValidation";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -23,7 +23,7 @@ export const RegisterForm = () => {
             onSubmit={(e) => {
                 e.preventDefault();
                 const validation = registerFormSchema.safeParse({
-                    username: userName,
+                    userName: userName,
                     email: email,
                     password: password,
                     confirmPassword: confirmPassword,
@@ -31,14 +31,7 @@ export const RegisterForm = () => {
                     hasAcceptedPrivacyPolicy: hasAcceptedPrivacyPolicy,
                 });
                 if (validation.success) {
-                    console.log(validation.data);
-                } else {
-                    console.log(validation.error);
-                    toast({
-                        title: `${validation.error.errors[0].code}`,
-                        description: validation.error.errors[0].message,
-                    });
-                }
+                    const createUser = async () => {}};
             }}
             className="flex flex-col gap-4 text-sm sm:text-base"
         >
