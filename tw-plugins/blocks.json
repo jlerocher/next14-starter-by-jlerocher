@@ -1,0 +1,10 @@
+{
+    "h1": {
+        "fontFamily": "monospace",
+        "fontWeight": 600,
+        "textDecoration": "underline",
+        "fontSize": "108px",
+        "lineHeight": "104px",
+        "letterSpacing": "-2.16px"
+    }
+}

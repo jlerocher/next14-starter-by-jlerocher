@@ -1,5 +1,5 @@
+import { ModeToggle } from "@/components/ui/ModeToggle";
 import Link from "next/link";
-import { ModeToggle } from "../ui/mode-toggle";
 
 const Header = () => {
     return (
