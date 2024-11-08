@@ -1,0 +1,3 @@
+pnpm gen
+pnpm format
+pnpm lint

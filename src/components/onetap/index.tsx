@@ -7,6 +7,7 @@ interface OneTapProps {
 }
 
 const OneTapComponent = ({ googleClientID }: OneTapProps) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { isLoading } = useOneTap({
         googleClientID,
         redirect: true,

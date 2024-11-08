@@ -11,6 +11,7 @@ const useOneTap = (
 ) => {
     const [isLoading, setIsLoading] = useState(false);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { status } = useSession({
         required: true,
         onUnauthenticated() {
@@ -18,9 +19,11 @@ const useOneTap = (
                 const { google } = window;
                 if (google) {
                     google.accounts.id.initialize({
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                         client_id: options?.googleClientID!,
                         itp_support: true,
                         use_fedcm_for_prompt: true,
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         callback: async (response: any) => {
                             setIsLoading(true);
                             // Here we call our Provider with the token provided by google

@@ -3,7 +3,7 @@ import Google from "next-auth/providers/google";
 
 import authConfig from "./auth.config";
 
-import prismadb from "@/lib/prisma/prismadb";
+import prisma from "@/lib/prisma/prismadb";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import { OAuth2Client } from "google-auth-library";
@@ -11,7 +11,7 @@ import Credentials from "next-auth/providers/credentials";
 
 const googleAuthClient = new OAuth2Client(process.env.AUTH_GOOGLE_ID);
 
-const adapter = PrismaAdapter(prismadb);
+const adapter = PrismaAdapter(prisma);
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
     ...authConfig,
@@ -29,6 +29,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             },
 
             // This function will be called upon signIn
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             async authorize(credentials, req) {
                 // These next few lines are simply the recommended way to use the Google Auth Javascript API as seen in the Google Auth docs
                 // What is going to happen is that t he Google One Tap UI will make an API call to Google and return a token associated with the user account
@@ -61,7 +62,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 // At this point we have deconstructed the payload and we have all the user's info at our disposal.
                 // So first we're going to do a check to see if we already have this user in our DB using the email as identifier.
                 // let user = adapter.getUserByEmail ? await adapter.getUserByEmail(email) : null;
-                let user = await prismadb.user.findUnique({
+                let user = await prisma.user.findUnique({
                     where: {
                         email,
                     },
@@ -75,7 +76,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     //   image,
                     //   emailVerified: email_verified ? new Date() : null,
                     // }) : null;
-                    user = await prismadb.user.create({
+                    user = await prisma.user.create({
                         data: {
                             name: [given_name, family_name].join(" "),
                             email,
@@ -88,7 +89,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 // The user may already exist, but maybe it signed up with a different provider. With the next few lines of code
                 // we check if the user already had a Google account associated, and if not we create one.
                 // let account = await adapter.getUserByAccount({ provider: "google", providerAccountId: sub });
-                let account = await prismadb.account.findFirst({
+                const account = await prisma.account.findFirst({
                     where: {
                         providerAccountId: sub,
                         provider: "google",
@@ -103,7 +104,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     //   providerAccountId: sub,
                     //   type: "credentials",
                     // });
-                    await prismadb.account.create({
+                    await prisma.account.create({
                         data: {
                             userId: user.id,
                             provider: "google",
@@ -119,8 +120,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }),
     ],
     callbacks: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         async session({ session }: any) {
-            const users = await prismadb.user.findUnique({
+            const users = await prisma.user.findUnique({
                 where: {
                     email: session.user.email!,
                 },

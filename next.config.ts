@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const withPWA = require("@ducanh2912/next-pwa").default({
     cacheOnFrontEndNav: true,
     aggressiveFrontEndNavCaching: true,
