@@ -7,10 +7,6 @@ export default async function Home() {
                 adipisci eaque repellat soluta dolor officia ipsum minima itaque
                 laudantium ut, voluptates fuga.
             </p>
-
-            <button type="button" className="btn">
-                Hi there, I'm a button
-            </button>
         </div>
     );
 }
