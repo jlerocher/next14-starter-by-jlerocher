@@ -1,6 +1,7 @@
 import "@/app/globals.css";
 import Footer from "@/components/navigation/Footer";
 import Header from "@/components/navigation/Header";
+import { Toaster } from "@/components/ui/toaster";
 import Providers from "@/providers/providers";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                     <Header />
                     {children}
                     <Footer />
+                    <Toaster />
                 </Providers>
             </body>
         </html>

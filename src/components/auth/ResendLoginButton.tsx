@@ -13,7 +13,13 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 
-export function ResendLoginButton() {
+type ResendLoginButtonProps = {
+    label?: string;
+};
+
+export function ResendLoginButton({
+    label = "Login with magic link",
+}: ResendLoginButtonProps) {
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -22,7 +28,7 @@ export function ResendLoginButton() {
                     className="flex items-center gap-2 w-full group/resend"
                 >
                     <Mail className="size-6 group-hover/resend:motion-preset-shake" />
-                    <span>Login with email</span>
+                    <span>{label}</span>
                 </Button>
             </DialogTrigger>
             <DialogContent>

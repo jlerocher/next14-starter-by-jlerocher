@@ -1,4 +1,5 @@
 "use client";
+
 import EmailComponent from "@/components/auth/EmailComponent";
 import GoogleLoginButton from "@/components/auth/GoogleLoginButton";
 import PasswordComponent from "@/components/auth/PasswordComponent";
@@ -12,13 +13,47 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 import { submitLoginForm } from "@/lib/server-actions/auth-actions";
 import { useEmailStore, usePasswordStore } from "@/store";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import React, { useState } from "react";
 
 export default function SignInPage() {
     const { email } = useEmailStore();
     const { password } = usePasswordStore();
+    const { toast } = useToast();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsLoading(true);
+        try {
+            const result = await submitLoginForm({
+                email: email,
+                password: password,
+            });
+            toast({
+                title: result.message,
+                description: result.success
+                    ? "You'll be redirected to dashboard soon!"
+                    : "Please login again",
+            });
+        } catch (error) {
+            console.log(
+                "Error while signing in",
+                error instanceof Error ? error.message : error,
+            );
+            toast({
+                title: "Error",
+                description: "An unexpected error occurred. Please try again.",
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <main className="min-h-screen">
             <Card className="max-w-lg mx-auto my-10">
@@ -37,14 +72,7 @@ export default function SignInPage() {
                         or
                         <hr className="w-1/2" />
                     </div>
-                    <form
-                        action={() => {
-                            submitLoginForm({
-                                email: email,
-                                password: password,
-                            });
-                        }}
-                    >
+                    <form onSubmit={handleSubmit}>
                         <EmailComponent />
                         <PasswordComponent />
 
@@ -53,20 +81,28 @@ export default function SignInPage() {
                             variant="default"
                             size="lg"
                             className="w-full my-5"
+                            disabled={isLoading}
                         >
-                            Sign in
+                            {isLoading ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Signing in...
+                                </>
+                            ) : (
+                                "Sign in"
+                            )}
                         </Button>
                     </form>
                 </CardContent>
 
                 <CardFooter>
                     <p className="">
-                        Does'nt have an account?{" "}
+                        Don't have an account?{" "}
                         <Link
                             href="/auth/signup"
                             className="underline underline-offset-4"
                         >
-                            create one here
+                            Create one here
                         </Link>
                     </p>
                 </CardFooter>
