@@ -68,6 +68,7 @@ export default function UserAvatar() {
                                     {user.name}
                                 </p>
                                 <p className="text-xs leading-none text-muted-foreground">
+                                    {/*@ts-expect-error xxxxx */}
                                     {user.email}
                                 </p>
                             </div>
