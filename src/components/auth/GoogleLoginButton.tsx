@@ -1,5 +1,5 @@
+import { googleAuth } from "@/lib/server-actions/auth-actions";
 import { FcGoogle } from "react-icons/fc";
-import { googleAuth } from "../../lib/server-actions/auth-actions";
 import { Button } from "../ui/button";
 
 export default function GoogleLoginButton() {
