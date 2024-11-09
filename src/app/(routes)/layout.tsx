@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <body className={inter.className}>
                 <Providers>
                     <Header />
-                    <main className="min-h-screen border">{children}</main>
+                    {children}
                     <Footer />
                 </Providers>
             </body>
