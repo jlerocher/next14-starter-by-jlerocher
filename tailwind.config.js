@@ -68,7 +68,7 @@ module.exports = {
                 },
             },
             rotate: {
-                "360": "360deg",
+                360: "360deg",
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
