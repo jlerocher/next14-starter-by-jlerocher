@@ -12,6 +12,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         Google,
         Resend({
             from: "no-reply@jlerocher.com",
+            apiKey: process.env.AUTH_RESEND_KEY,
+            maxAge: 60 * 60 * 24 * 7,
         }),
         Credentials({
             credentials: {

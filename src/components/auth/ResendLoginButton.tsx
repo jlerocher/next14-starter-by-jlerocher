@@ -31,7 +31,7 @@ export function ResendLoginButton({
                     <span>{label}</span>
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-w-[340px] md:max-w-lg rounded-md">
                 <DialogHeader>
                     <DialogTitle>Magic link login</DialogTitle>
                     <DialogDescription>

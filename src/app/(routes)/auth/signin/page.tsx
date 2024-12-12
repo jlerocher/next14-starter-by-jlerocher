@@ -55,7 +55,7 @@ export default function SignInPage() {
     };
 
     return (
-        <main className="min-h-screen">
+        <main className="min-h-screen px-4">
             <Card className="max-w-lg mx-auto my-10">
                 <CardHeader>
                     <CardTitle>Sign In</CardTitle>
