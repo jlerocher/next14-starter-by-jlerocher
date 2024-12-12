@@ -1,6 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const blocks = require("./tw-plugins/blocks.json");
-import plugin from "tailwindcss/plugin";
 
 module.exports = {
     darkMode: ["class"],
@@ -82,8 +80,5 @@ module.exports = {
         require("tailwindcss-animate"),
         require("@tailwindcss/forms"),
         require("tailwindcss-motion"),
-        plugin(function ({ addUtilities }) {
-            addUtilities(blocks);
-        }),
     ],
 };
