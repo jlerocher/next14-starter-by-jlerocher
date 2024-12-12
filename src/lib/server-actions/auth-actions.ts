@@ -1,7 +1,7 @@
 "use server";
-import { prisma } from "@/lib/prisma/prisma";
+import prisma from "@/lib/prisma/prisma";
 import bcrypt from "bcrypt";
-import { signIn, signOut } from "../../../auth";
+import { auth, signIn, signOut } from "../../../auth";
 
 type submitLoginFormProps = {
     email: string;
@@ -24,7 +24,8 @@ type submitRegisterFormProps = {
  * @returns {Promise<void>} A promise that resolves when the authentication process is complete.
  */
 export const googleAuth = async (): Promise<void> => {
-    await signIn("google");
+    const session = await auth();
+    await signIn("google", { redirectTo: `/auth/profile/${session?.user.id}` });
 };
 
 /**
@@ -49,7 +50,7 @@ export const magicLinkAuth = async (formData: object): Promise<void> => {
  * @returns {Promise<void>} A promise that resolves when the sign-out process is complete.
  */
 export const signUserOut = async (): Promise<void> => {
-    await signOut();
+    await signOut({ redirectTo: "/auth/signin" });
 };
 
 /**
@@ -70,11 +71,13 @@ export const submitLoginForm = async (
             message: "Please provide both email and password",
         };
     }
+    const session = await auth();
 
     try {
         await signIn("credentials", {
             email: email,
             password: password,
+            redirectTo: `/auth/profile/${session?.user.id}`,
         });
 
         return {
@@ -97,7 +100,6 @@ export async function submitRegisterForm(
     formData: submitRegisterFormProps,
 ): Promise<{ success: boolean; message: string }> {
     const { name, email, password } = formData;
-
     if (!name || !email || !password) {
         return {
             success: false,

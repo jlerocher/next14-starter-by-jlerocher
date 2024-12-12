@@ -18,6 +18,7 @@ import {
 import { signUserOut } from "@/lib/server-actions/auth-actions";
 import { LogOut, Settings, User } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function UserAvatar() {
@@ -42,6 +43,19 @@ export default function UserAvatar() {
     const handleLogout = async () => {
         await signUserOut();
     };
+
+    const userMenuItems = [
+        {
+            label: "Profile",
+            icon: User,
+            url: `/auth/profile/${user.id}`,
+        },
+        {
+            label: "Settings",
+            icon: Settings,
+            url: "/auth/settings",
+        },
+    ];
 
     return (
         <TooltipProvider>
@@ -74,14 +88,18 @@ export default function UserAvatar() {
                             </div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <User className="mr-2 h-4 w-4" />
-                            <span>Profile</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Settings className="mr-2 h-4 w-4" />
-                            <span>Settings</span>
-                        </DropdownMenuItem>
+                        {userMenuItems.map((item) => (
+                            <DropdownMenuItem
+                                key={item.label}
+                                asChild
+                                className="group"
+                            >
+                                <Link href={item.url}>
+                                    <item.icon className="mr-2 h-4 w-4" />
+                                    <span>{item.label}</span>
+                                </Link>
+                            </DropdownMenuItem>
+                        ))}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             onClick={handleLogout}

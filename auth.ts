@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma/prisma";
+import prisma from "@/lib/prisma/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
@@ -56,4 +56,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
     },
     session: { strategy: "database", maxAge: 60 * 60 * 24 * 7 }, // 7 days
+    pages: {
+        signIn: "/auth/signin",
+        newUser: "/auth/profile",
+    },
+    useSecureCookies: process.env.NODE_ENV === "production",
 });

@@ -17,14 +17,29 @@ import { useToast } from "@/hooks/use-toast";
 import { submitLoginForm } from "@/lib/server-actions/auth-actions";
 import { useEmailStore, usePasswordStore } from "@/store";
 import { Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 export default function SignInPage() {
     const { email } = useEmailStore();
     const { password } = usePasswordStore();
     const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
+    const { data: session } = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (session) {
+            toast({
+                title: "Welcome back",
+                description:
+                    "You are now signed in. You'll be redirected to your profile soon.",
+            });
+            router.push("/auth/profile/" + session.user.id);
+        }
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
